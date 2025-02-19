@@ -1,0 +1,15 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: {{ include "nginx.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "nginx.labels" . | nindent 4 }}
+spec:
+  healthCheck:
+    checkIntervalSec: 15
+    port: {{ .Values.backendconfig.port }}
+    type: {{ .Values.backendconfig.type }}
+    requestPath: {{ .Values.backendconfig.requestPath }}
+{{- end }}
